@@ -1,0 +1,15 @@
+#華攝氏溫度轉換
+user_enter = input('這是一個華攝氏溫度轉換計算機，請輸入您要的轉換的溫度:')
+
+if user_enter.count('.') >1:
+    print('只能有一個小數點')
+elif user_enter[1: ].replace('.','').isdigit(): 
+    if user_enter[0] == '-' or '+' or user_enter.isdigit():
+        temp = float(user_enter)
+        print(f'{temp}華氏溫度轉換成攝氏溫度:{(temp-32)*5/9:+5.1f}')
+        print(f'{temp}攝氏溫度轉換成華氏溫度:{(temp*9/5)+32:+5.1f}')
+    else:
+        print('只能為負號或數字開頭')
+else:
+    print('輸入的溫度無法轉換')
+    
