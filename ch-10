@@ -1,0 +1,20 @@
+#階乘
+num = user_keyin = int(input('請輸入一個數字:'))
+
+while (user_keyin > 1):
+    
+    user_keyin = user_keyin - 1
+    
+    num  = num * user_keyin 
+
+print(num)
+
+#平方根
+user_y = float(input('請輸入一個正數:'))
+
+user_x = 0.0
+
+while user_x*user_x <= user_y:
+    user_x = user_x + 0.0001
+
+print(f'{user_y}的平方根是:{user_x}')
