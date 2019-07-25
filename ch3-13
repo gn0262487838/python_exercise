@@ -1,0 +1,22 @@
+
+#猜謎小遊戲
+
+print('請說出胡仁寶的乳名，如果想放棄請輸入:認輸')
+
+user_guess = input('猜猜阿:')
+
+while (user_guess != '寶寶'):
+
+    if (user_guess == '認輸'):
+        
+        break
+
+    print('that\' false ')    
+    
+    user_guess = input('再猜阿:')
+        
+else:
+    print('that\'s true ')
+    
+print('遊戲結束')
+
