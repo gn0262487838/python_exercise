@@ -1,3 +1,4 @@
+
 #階乘
 num = user_keyin = int(input('請輸入一個數字:'))
 
