@@ -1,23 +1,23 @@
 #get 讀取資料
 import requests 
 
-r = requests.get('https://www.flag.com.tw')
+r = requests.get('https://www.flag.com.tw')     #向網站發出get請求並將回應物件儲存到r。
 
-if r.status_code == 200:
+if r.status_code == 200:        #回應狀態若為200為OK
     print(r.text)
 else:
-    print(r.status_code, r.reason)
+    print(r.status_code, r.reason)      #若發生錯誤，狀態法非200，則印出狀態及錯誤原因。
     
 #post 以上傳的資料來'新增'一個名為a.txt檔案
 import requests
 
 url = 'http://httpbin.org/post'
 
-r = requests.post(url, data = 'hello')
+r = requests.post(url, data = 'hello')      #字串會以data格式送出。
 
 print(r.text)
 
-r = requests.post(url, data = {'id':'123','name':'joe'})
+r = requests.post(url, data = {'id':'123','name':'joe'})        #字典會以form格式送出。
 
 print(r.text)
 
