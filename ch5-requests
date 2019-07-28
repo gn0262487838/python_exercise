@@ -1,0 +1,40 @@
+#get 讀取資料
+import requests 
+
+r = requests.get('https://www.flag.com.tw')
+
+if r.status_code == 200:
+    print(r.text)
+else:
+    print(r.status_code, r.reason)
+    
+#post 以上傳的資料來'新增'一個名為a.txt檔案
+import requests
+
+url = 'http://httpbin.org/post'
+
+r = requests.post(url, data = 'hello')
+
+print(r.text)
+
+r = requests.post(url, data = {'id':'123','name':'joe'})
+
+print(r.text)
+
+#put 以上傳的資料來'覆蓋'a.txt，若a.txt不存在則新增一個。
+import requests
+
+r = requests.put('https://httpbin.org/put', data ={'key':'abc'})
+print(r.text)
+
+#patch 以上傳的資料來更改a.txt的部分內容。
+import requests
+r = requests.patch('https://httpbin.org/patch', data = {'key':'a'})
+print(r.text)
+
+#delete 刪除a.txt
+import requests
+r = requests.delete('https://httpbin.org/delete')
+print(r.text)
+
+    
