@@ -1,0 +1,19 @@
+
+x = 30
+y = 20
+
+def a1(v):
+    x = 20
+    return x + v
+
+def a2(v):
+    global x
+    c = y
+    v = v + c + x
+    x = 20
+    c = 10
+    return v
+y = 0
+v = a1(y)
+print(a2(a2(v)))
+
