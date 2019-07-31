@@ -10,11 +10,11 @@ from time import sleep
 
 browser = webdriver.Chrome()
 browser.get('https://tip.railway.gov.tw/tra-tip-web/tip/tip001/tip121/query')
-print('標題:',browser.title)
-print('網址:',browser.current_url)
-print('內容:',browser.page_source[0:100])
-print('視窗:',browser.get_window_rect())
-browser.save_screenshot('C:\\Users\\***\\***\\圖片\\1.jpg')
+print('標題:' + browser.title)
+print('網址:' + browser.current_url)
+print('內容:' + browser.page_source[0:100])
+print('視窗:' , browser.get_window_rect())        #字串才能用+喔
+browser.save_screenshot('C:\\Users\\gn026\\OneDrive\\圖片\\1.jpg')
 sleep(3)
 browser.set_window_rect(200, 100, 500, 250)
 sleep(3)
