@@ -1,0 +1,15 @@
+
+#使用selenium需先安裝遊覽器的Webdriver在anaconda的安裝路徑(c:\Users\使用者名稱\Anaconda3)
+
+#在於anaconda安裝selenium套件
+
+#測試開啟台鐵訂票網址。
+
+from selenium import webdriver
+from time import sleep
+
+browser = webdriver.Chrome()
+browser.get('https://tip.railway.gov.tw/tra-tip-web/tip/tip001/tip121/query')
+sleep(5)        #開啟遊覽器進入網址後暫停五秒
+browser.close()   #關閉遊覽器
+
