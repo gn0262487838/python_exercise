@@ -1,5 +1,4 @@
 
-
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 import time
@@ -14,7 +13,7 @@ browser.find_element_by_name('password').send_keys('*****')
 select_option = Select(browser.find_element_by_name('questionid'))
 select_option.select_by_visible_text('父親出生的城市')
 
-browser.find_element_by_name('answer').send_keys('基隆')
+browser.find_element_by_name('answer').send_keys('****')
 browser.find_element_by_name('loginsubmit').click()
 time.sleep(5)
 browser.quit()
