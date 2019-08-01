@@ -1,0 +1,16 @@
+
+from selenium import webdriver
+import time
+
+googl = webdriver.Chrome()
+googl.get('https://www.google.com.tw/')
+
+googl.find_element_by_id('gb_70').click()
+googl.find_element_by_id('identifierId').send_keys('******')
+googl.find_element_by_id('identifierNext').click()
+time.sleep(1)       #sleep一下，才不會有報錯，為啥需要sleep呢? 不能直接省略sleep???
+googl.find_element_by_name('password').send_keys('*****')      #如果省略11行，程式無法抓到name的值。
+googl.find_element_by_id('passwordNext').click()
+
+time.sleep(5)
+googl.quit()
