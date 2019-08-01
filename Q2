@@ -1,0 +1,25 @@
+#台鐵搶票測試ing
+from selenium import webdriver
+from selenium.webdriver.support.ui import Select
+import time
+
+ticket = webdriver.Chrome()
+ticket.get('https://www.railway.gov.tw/tra-tip-web/tip/tip001/tip121/query')
+ticket.maximize_window()
+ticket.find_element_by_id('pid').send_keys('H123876662')
+ticket.find_element_by_id('startStation').send_keys('桃園')
+ticket.find_element_by_id('endStation').send_keys('臺北')
+#如何克服按鍵???
+#ticket.find_element_by_id('tripType1').submit()
+
+ticket.find_element_by_id('normalQty').clear()
+ticket.find_element_by_id('normalQty').send_keys('2')
+ticket.find_element_by_id('rideDate1').clear()
+ticket.find_element_by_id('rideDate1').send_keys('20190810')
+ticket.find_element_by_id('trainNoList1').send_keys('272')
+#如何克服reCAPTCHA???
+#ticket.find_element_by_id('rc-anchor-alert').click()
+#如何克服按鍵???
+#ticket.find_element_by_xpath('//input[name="quickTipToken"]').click()
+
+ticket.quit()
