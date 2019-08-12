@@ -1,0 +1,37 @@
+
+from urllib.request import urlopen
+import json
+url = "https://www.google.com/doodles/json/2019/7?hl=zh_TW"
+ans = urlopen(url)
+#print(ans) 讀出來是一整個資料的記憶體位置。
+# doodles = ans.read() 讀得出來，但出來的資料是原始編碼，即表示電腦才讀得懂的機器碼。
+
+#需要import json，利用json.load 來編譯(解讀)原始碼成為人類可讀的資訊。
+#比較一下 json.load 跟 json.loads有何不同???
+doodles = json.load(ans)
+
+#走訪容器list中的dict
+for i in doodles:
+    url = "https:"+i["url"]
+    print(i["title"],url)
+    
+    print(url.split("/")[-1])
+    #針對圖片處理
+    
+    ans = urlopen(url)
+    #print(ans) urlopen讀出來是每張圖片的記憶體位置。
+    img = ans.read()
+    #print(img) 讀出來是每一張圖片的原始碼。
+    
+    #在存檔前要一一設置檔名，故先把每個圖片檔名先定義好。
+    #"doodles/"，如不加"/"則找不到python你創建的file_doodles，則圖片都會存在pyhton的資料夾裡。
+    filename = "doodles/" + url.split("/")[-1]
+    
+    
+    #存檔三部曲
+    #open(path,mode,encoding)
+    #文字mode "r"、"w"、"a" ，encoding = utf-8。
+    #圖片mode "rb"、"wb"、"ab"，無encoding。
+    file = open(filename,"wb")
+    file.write(img)
+    file.close()
