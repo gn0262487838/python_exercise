@@ -1,0 +1,31 @@
+
+from urllib.request import urlopen, urlretrieve
+import json
+import os
+
+#range(8) = range(0, 8)
+for month in range(0, 2):  
+    url = "https://www.google.com/doodles/json/2019/"+ str(month + 1) +"?hl=zh_TW"
+    ans = urlopen(url)
+    #print(ans) 讀出來是一整個資料的記憶體位置。
+    # doodles = ans.read() 讀得出來，但出來的資料是原始編碼，即表示電腦才讀得懂的機器碼。
+    
+    #需要import json，利用json.load 來編譯(解讀)原始碼成為人類可讀的資訊。
+    #比較一下 json.load 跟 json.loads有何不同???
+    doodles = json.load(ans)
+    print("現在處理頁面:",url)   
+    #走訪容器list中的dict
+    for i in doodles:
+        url = "https:"+i["url"]
+        print(i["title"],url)
+                
+        #在存檔前要一一設置檔名，故先把每個圖片檔名先定義好。
+        #"doodles/"，如不加"/"則找不到python你創建的file_doodles，則圖片都會存在pyhton的資料夾裡。
+        dirname = "doodles/"+ str(month + 1) + "/"
+        if not os.path.exists(dirname):
+            os.mkdir(dirname)
+            
+        filename = dirname + url.split("/")[-1]
+        
+        #urlretrieve 即可替代打開讀取圖片並存檔三部曲的步驟。
+        urlretrieve(url, filename)
