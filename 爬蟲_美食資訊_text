@@ -1,0 +1,30 @@
+
+from urllib.request import urlopen
+from bs4 import BeautifulSoup as BS
+from urllib.error import HTTPError
+
+page = 1
+while True:
+    url = "https://tabelog.com/tw/tokyo/rstLst/"+ str(page) +"?SrtT=rt"
+    print("現在處理中:"+"https://tabelog.com/tw/tokyo/rstLst/"+ str(page) +"?SrtT=rt")
+    try:
+        response = urlopen(url)
+    except HTTPError:
+        print("好像結束了。")
+        break
+    html = BS(response)
+    page = page + 1
+    
+    #find(找到一個相符的條件)；find_all(找到所有相符的條件)
+    #find的答案一個;find_all:list
+    
+    #htnl.find_all("li",{"class":"..."}) 方法一
+    #html.find_all("li",class_="...") 方法二
+    
+    for restaurant in html.find_all("li",class_="list-rst"):
+        big_name = restaurant.find("a",class_="list-rst__name-main")
+        small_name = restaurant.find("small",class_="list-rst__name-ja")
+        values = restaurant.find("b",class_="c-rating__val")
+        #萃取紙條:.text;萃取特別特徵:[特徵]
+        print(str(values.text), big_name.text, small_name.text, big_name["href"],sep="  ")
+ 
