@@ -3,8 +3,8 @@ from urllib.request import urlopen, urlretrieve
 import json
 import os
 
-#range(8) = range(0, 8)
-for month in range(0, 2):  
+#range(12) = range(0, 12)
+for month in range(12):  
     url = "https://www.google.com/doodles/json/2019/"+ str(month + 1) +"?hl=zh_TW"
     ans = urlopen(url)
     #print(ans) 讀出來是一整個資料的記憶體位置。
@@ -23,7 +23,7 @@ for month in range(0, 2):
         #"doodles/"，如不加"/"則找不到python你創建的file_doodles，則圖片都會存在pyhton的資料夾裡。
         dirname = "doodles/"+ str(month + 1) + "/"
         if not os.path.exists(dirname):
-            os.mkdir(dirname)
+            os.makedirs(dirname)
             
         filename = dirname + url.split("/")[-1]
         
