@@ -1,0 +1,30 @@
+
+import sys as s
+import os
+
+#ex2
+print(s.argv)
+if len(s.argv)>=2:
+    os.system("mkdir"+s.argv[1])
+    print("建立目錄"+s.argv[1])
+else:
+    print("請輸入參數:")
+
+
+#ex2
+d = os.popen("dir")
+D = d.read().split(",")[0].replace("2019/08/14","2020/08/14")
+print(D)
+
+print(d)
+print(type(d))
+
+"""
+compare
+1.
+os.systen(指令)
+
+2.
+程序變數 = os.popen(指令)
+程序變數.read()
+
