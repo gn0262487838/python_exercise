@@ -5,7 +5,7 @@ from urllib.error import HTTPError
 
 page = 1
 while True:
-    url = "https://tabelog.com/tw/tokyo/rstLst/"+ str(page) +"?SrtT=rt"
+    url = "https://tabelog.com/tw/tokyo/rstLst/"+ str(page)+ "/" +"?SrtT=rt"
     print("現在處理中:"+"https://tabelog.com/tw/tokyo/rstLst/"+ str(page) +"?SrtT=rt")
     try:
         response = urlopen(url)
