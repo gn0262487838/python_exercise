@@ -64,6 +64,7 @@ while operating != 0:
         user_choose = int(input("你想要進入的索引:"))
         dirr = dirr + "\\" + box[user_choose]
         os.chdir(dirr)
+        os.system("cls")
 
     elif operating == 7:
         index = 0
