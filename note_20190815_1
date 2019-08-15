@@ -1,0 +1,103 @@
+
+import os
+import codecs as co
+
+operating = -1
+while operating != 0:
+    os.system("cls")    #清除畫面，要注意邏輯語法位置要擺對，不然結果會被清洗掉!!!
+    dirr = os.getcwd()  #取得目前工作路徑
+
+    if operating == 1:
+        for d in os.listdir(dirr):
+            if os.path.isdir(dirr+"\\"+d) == False:
+                print(d)
+
+    elif operating == 2:
+        for d in os.listdir(dirr):
+            if os.path.isdir(dirr+"\\"+d) == True:
+                print(d)
+    elif operating == 3:
+        index = 0
+        box = []
+        for d in os.listdir(dirr):
+            if os.path.isdir(dirr+"\\"+d) == False:
+                print(index,d)
+                box.append(d)
+                index += 1  #注意，如果跟if平行，則不管是檔案還是目錄index都會加一，這樣會導致順序與資料(list)不一致。
+        user_choose = int(input("你想要開啟的索引:"))
+        file_read = co.open(box[user_choose],"r","utf8")
+        print("=====檔案開啟=====")
+        print(file_read.read())
+        file_read.close()
+        print("=====檔案結束=====")
+    elif operating == 4:
+        index = 0
+        box = []
+        for d in os.listdir(dirr):
+            if os.path.isdir(dirr+"\\"+d) == False:
+                print(index,d)
+                box.append(d)
+                index += 1  
+        user_choose = int(input("你想要刪除的索引:"))
+        if os.path.exists(box[user_choose]):
+            os.remove(box[user_choose])
+            os.system("cls")
+    elif operating == 5:
+        index = 0
+        box = []
+        for d in os.listdir(dirr):
+            if os.path.isdir(dirr+"\\"+d) == False:
+                print(index,d)
+                box.append(d)
+                index += 1  
+        user_choose = int(input("你想要執行的索引:"))
+        os.system("start "+ box[user_choose])   #start為cmd 執行程式的命令。
+
+    elif operating == 6:
+        index = 0
+        box = []
+        for d in os.listdir(dirr):
+            if os.path.isdir(dirr+"\\"+d) == True:
+                print(index,d)
+                box.append(d)
+                index += 1  
+        user_choose = int(input("你想要進入的索引:"))
+        dirr = dirr + "\\" + box[user_choose]
+        os.chdir(dirr)
+
+    elif operating == 7:
+        index = 0
+        box = []
+        for d in os.listdir(dirr):
+            if os.path.isdir(dirr+"\\"+d) == True:
+                print(index,d)
+                box.append(d)
+                index += 1
+        user_choose = int(input("你想要刪除的資料夾:"))
+        if os.path.exists(user_choose):
+            os.rmdir(box[user_choose])
+            os.system("cls")
+    
+    elif operating == 8:
+        #想用list操作，但還沒成功!
+        '''
+        Dirrlist = dirr.split(",")
+        del Dirrlist[-1]
+        Newdirr = "\\".join(Dirrlist)
+        print(Newdirr)
+        os.chdir(Newdirr)
+        '''
+        os.chdir("..")  #os.system("cd ..")先呼叫cmd在做改變，並不會實際改變!!!
+        dirr = os.getcwd()  
+
+    print("工作路徑:",dirr)
+    print("(0)","離開程式")
+    print("(1)","列出檔案")
+    print("(2)","列出資料夾")
+    print("(3)","顯示檔案內容")
+    print("(4)","刪除檔案")
+    print("(5)","執行檔案")
+    print("(6)","進入資料夾")
+    print("(7)","刪除資料夾")
+    print("(8)","回上層目錄")
+    operating = int(input("操作:"))
