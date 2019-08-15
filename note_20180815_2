@@ -1,0 +1,22 @@
+import colorama
+import time
+import os
+
+colorama.init(True)
+t = 0
+while True:
+    t = t+1
+    if t <= 5:
+        os.system("cls")
+        print(colorama.Back.RED+"  "+colorama.Back.BLACK +"  "+colorama.Back.BLACK+"  "+"\n",t) 
+        time.sleep(1)
+        os.system("cls")
+    elif t == 6:
+        print(colorama.Back.BLACK+"  "+colorama.Back.YELLOW +"  "+colorama.Back.BLACK+"  "+"\n",t)
+        time.sleep(1)
+        os.system("cls")
+    elif 6<t<11:
+        print(colorama.Back.BLACK+"  "+colorama.Back.BLACK +"  "+colorama.Back.GREEN+"  "+"\n",t)
+        time.sleep(1)
+        os.system("cls")
+    t %= 10
