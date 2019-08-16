@@ -1,19 +1,22 @@
 
 import wx
-import noname
+import noname   #wxpythonbuilding產生GUI.py
 import time
 import os
 
 class mycall(noname.MyFrame1):
-    #def BD(self, event):
-        
+    def BD(self, event):
+        self.m_richText2.Clear()
 
     def  OP(self, event):
         FileName = wx.FileSelector(
             "開啟舊檔",
-            wildcard = "TEXT (*.txt)|*.txt",
+            wildcard = "文件檔 (*.txt)|*.txt",
             flags = wx.FD_OPEN
-        )     
+        )
+        with open(FileName,"r") as f:
+            f = self.m_richText2.SetValue(f.read())
+ 
     def SV( self, event):
         FileName = wx.FileSelector(
             "儲存檔案",
@@ -21,9 +24,17 @@ class mycall(noname.MyFrame1):
             flags = wx.FD_SAVE          
         )
 
+        ctt = self.m_richText2.GetValue()   #尋找筆記本內容也就是值。
+        #兩種方法寫存檔檔案。
+        # f = open(FileName,"w")
+        # f.write(ctt)
+        # f.close()
+        if FileName:
+            with open(FileName,"w") as f:
+                f.write(ctt)
+        
     def CL(self , event):
         self.Close()
-        
         
     def timeout( self, event ):
         self.m_statusBar5.Setwindow_name(time.strtime("%Y-%m-%d %H:%M:%S"))
@@ -32,3 +43,4 @@ w = wx.App()
 p = mycall(None)
 p.Show()
 w.MainLoop()
+
