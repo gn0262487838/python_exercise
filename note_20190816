@@ -14,9 +14,10 @@ class mycall(noname.MyFrame1):
             wildcard = "文件檔 (*.txt)|*.txt",
             flags = wx.FD_OPEN
         )
-        with open(FileName,"r") as f:
-            f = self.m_richText2.SetValue(f.read())
- 
+        if FileName:
+            with open(FileName,"r") as f:
+                f = self.m_richText2.SetValue(f.read())
+
     def SV( self, event):
         FileName = wx.FileSelector(
             "儲存檔案",
@@ -38,6 +39,8 @@ class mycall(noname.MyFrame1):
         
     def timeout( self, event ):
         self.m_statusBar5.Setwindow_name(time.strtime("%Y-%m-%d %H:%M:%S"))
+    
+    
 
 w = wx.App()
 p = mycall(None)
