@@ -1,0 +1,34 @@
+
+import wx
+import noname
+import time
+import os
+
+class mycall(noname.MyFrame1):
+    #def BD(self, event):
+        
+
+    def  OP(self, event):
+        FileName = wx.FileSelector(
+            "開啟舊檔",
+            wildcard = "TEXT (*.txt)|*.txt",
+            flags = wx.FD_OPEN
+        )     
+    def SV( self, event):
+        FileName = wx.FileSelector(
+            "儲存檔案",
+            wildcard = "TEXT (*.txt)|*.txt",
+            flags = wx.FD_SAVE          
+        )
+
+    def CL(self , event):
+        self.Close()
+        
+        
+    def timeout( self, event ):
+        self.m_statusBar5.Setwindow_name(time.strtime("%Y-%m-%d %H:%M:%S"))
+
+w = wx.App()
+p = mycall(None)
+p.Show()
+w.MainLoop()
