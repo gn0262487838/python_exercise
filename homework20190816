@@ -1,4 +1,5 @@
 
+
 import wx
 import noname   #wxpythonbuilding產生GUI.py
 import time
