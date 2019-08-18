@@ -1,0 +1,38 @@
+from bs4 import BeautifulSoup
+import requests
+
+url = "https://www.ptt.cc/bbs/movie/M.1566110076.A.C7F.html"
+response = requests.get(url)
+html = BeautifulSoup(response.text)
+
+score = 0
+content = html.find_all("span",class_="article-meta-value")
+print("作者:",content[0].text)
+print("看板:",content[1].text)
+print("標題:",content[2].text)
+print("時間:",content[3].text)
+
+
+for i in html.find_all("div",class_="article-metaline"):
+    i.extract()
+
+html.find("div",class_="article-metaline-right").extract()
+
+score = 0
+for i in html.find_all("div",class_="push"):
+    if "推" in html.find("span",class_="push-tag").text:
+        score += 1
+    elif "噓" in html.find("span",class_="push-tag").text:
+        score -= 1
+    i.extract()
+print("評價值:",score)
+
+html.find("div",id ="topbar-container").extract()
+html.find("div",id ="navigation-container").extract()
+html.find("head").extract()
+html.find("div",id ="article-polling").extract()
+for i in html.find_all("span",class_="f2"):
+    i.extract()
+html.find("script").extract()
+    
+print(html.text)
