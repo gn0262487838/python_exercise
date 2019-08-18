@@ -1,30 +1,45 @@
 
 from urllib.request import urlopen
 from bs4 import BeautifulSoup as BS
+import pandas as pd
 from urllib.error import HTTPError
+
+df_res = pd.DataFrame(columns=["Name","Name_JP","Star","URL"])
 
 page = 1
 while True:
-    url = "https://tabelog.com/tw/tokyo/rstLst/"+ str(page)+ "/" +"?SrtT=rt"
-    print("現在處理中:"+"https://tabelog.com/tw/tokyo/rstLst/"+ str(page) +"?SrtT=rt")
+    url =  "https://tabelog.com/tw/kyoto/rstLst/"+ str(page) +"?SrtT=rt"
+    print("現在處理頁面:",page,"================================")
+    page += 1
     try:
         response = urlopen(url)
     except HTTPError:
-        print("好像結束了。")
+        print("好像結束喔。")
         break
+    
     html = BS(response)
-    page = page + 1
     
     #find(找到一個相符的條件)；find_all(找到所有相符的條件)
     #find的答案一個;find_all:list
     
     #htnl.find_all("li",{"class":"..."}) 方法一
     #html.find_all("li",class_="...") 方法二
-    
-    for restaurant in html.find_all("li",class_="list-rst"):
-        big_name = restaurant.find("a",class_="list-rst__name-main")
-        small_name = restaurant.find("small",class_="list-rst__name-ja")
-        values = restaurant.find("b",class_="c-rating__val")
+
+    for i in html.find_all("li",class_="list-rst"):
+        restaurant = i.find("a",class_="list-rst__name-main")
+        name_jp = i.find("small",class_="list-rst__name-ja")
+        evaluation = i.find("b",class_="c-rating__val")
         #萃取紙條:.text;萃取特別特徵:[特徵]
-        print(str(values.text), big_name.text, small_name.text, big_name["href"],sep="  ")
+        S = pd.Series( [restaurant.text, name_jp.text, evaluation.text, restaurant["href"] ],index=["Name","Name_JP","Star","URL"])
+        print(
+            restaurant.text,
+            name_jp.text,
+            evaluation.text,
+            restaurant["href"]
+        )
+
+        df_res = df_res.append(S,ignore_index=True)
+
+df_res.to_csv("restaurant.csv",encoding="utf-8",index= 0)
+
  
