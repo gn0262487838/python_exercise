@@ -2,10 +2,10 @@ from bs4 import BeautifulSoup
 import requests
 from jieba.analyse import extract_tags
 
-url = "https://www.ptt.cc/bbs/movie/M.1566110076.A.C7F.html"
-response = requests.get(url)
+url = "https://www.ptt.cc/bbs/sex/M.1566109414.A.00E.html"
+response = requests.get(url,cookies={"over18":"1"})
 html = BeautifulSoup(response.text)
-
+# print(html) 來check網頁有無錯誤訊息。因網址是有18禁，故需要用cookies來解決此問題。ex. requests.get(url,cookies={"over18":"1"})
 con = html.find("div",id ="main-content")   #不能find_all喔，隨然該id只有一個，但find_all出來的是list，find出來是一個html。
 
 score = 0
@@ -35,5 +35,4 @@ for i in con.find_all("span",class_="f2"):
     i.extract()
 
 print(con.text)
-print("關鍵字:",extract_tags(con.text,10)) #extract_tags(html.text,10),數字10表示指定10個關鍵字。
-
+print("關鍵字:",extract_tags(con.text,10))  #extract_tags(con.text,10),數字10表示選定10個關鍵字。
