@@ -1,9 +1,12 @@
 from bs4 import BeautifulSoup
 import requests
+from jieba.analyse import extract_tags
 
 url = "https://www.ptt.cc/bbs/movie/M.1566110076.A.C7F.html"
 response = requests.get(url)
 html = BeautifulSoup(response.text)
+
+# con = html.find_all("div",id ="main-content")
 
 score = 0
 content = html.find_all("span",class_="article-meta-value")
@@ -13,6 +16,7 @@ print("標題:",content[2].text)
 print("時間:",content[3].text)
 
 # 人間蒸發"一個"盒子 >>> extract()
+
 for i in html.find_all("div",class_="article-metaline"):
     i.extract()
 
@@ -34,5 +38,6 @@ html.find("div",id ="article-polling").extract()
 for i in html.find_all("span",class_="f2"):
     i.extract()
 html.find("script").extract()
-    
+
 print(html.text)
+print("關鍵字:",extract_tags(html.text,10))    #extract_tags(html.text,10),數字10表示指定10個關鍵字。
