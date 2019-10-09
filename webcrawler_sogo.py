@@ -27,7 +27,7 @@ class Crawler():
         driver.get(url)
         return driver
 
-    def download_pic(self, driver, keyword):
+    def download_pic(self, driver, keyword, xpath):
         imgurlbox = []
         pos = 0
         l = 1
@@ -76,5 +76,5 @@ if __name__ =="__main__":
     '''
     craw = Crawler()
     driver = craw.Driver(url)
-    craw.download_pic(driver, keyword)
+    craw.download_pic(driver, keyword, xpath)
     driver.close()
