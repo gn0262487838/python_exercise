@@ -22,7 +22,7 @@ driver.get(url)
 '''測試
 
 # 頁面縮放，但縮放完程式就暫停了...
-# driver.execute_script("document.body.style.zoom='0.8'")
+driver.execute_script("document.body.style.zoom='0.8'")
 
 '''
 
