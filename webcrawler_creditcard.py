@@ -17,14 +17,19 @@ def scrolltop(pos):
     
 
 # 起始位置設為200，注意螢幕大小，我的螢幕為14吋。
-pos = 200
-for i in range(10):
-    pos += 320
-    scrolltop(pos)
-    # 注意抓取的值為list，要一個一個取出。
-    driver.find_elements_by_xpath("//div[@class='card-features']/a[@class='link-learn-more']")[i].click()
-    time.sleep(1)
-    driver.back()
-    print("現在到第幾張卡:", i+1)
-    scrolltop(pos)
-    time.sleep(1)
+page = 1
+while page<5:    
+    pos = 200
+    for i in range(10):
+        pos += 320
+        scrolltop(pos)
+        # 注意抓取的值為list，要一個一個取出。
+        driver.find_elements_by_xpath("//div[@class='card-features']/a[@class='link-learn-more']")[i].click()
+        time.sleep(1)
+        driver.back()
+        print("現在到第幾頁:",page,"到第幾張卡片:", i+1)
+        scrolltop(pos)
+        time.sleep(1)
+    drive.find_element_by_id("layout_0_rightcontent_0_updatepanel_1_RptPagination_HlkPageNumber_{}".format(page))
+    page += 1
+print("好像沒東西喔!!!")
