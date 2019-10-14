@@ -30,6 +30,6 @@ while page<5:
         print("現在到第幾頁:",page,"到第幾張卡片:", i+1)
         scrolltop(pos)
         time.sleep(1)
-    driver.find_element_by_id("layout_0_rightcontent_0_updatepanel_1_RptPagination_HlkPageNumber_{}".format(page)).click()
+    driver.find_element(By.ID, "layout_0_rightcontent_0_updatepanel_1_RptPagination_HlkPageNumber_{}".format(page)).click()
     page += 1
 print("好像沒東西喔!!!")
