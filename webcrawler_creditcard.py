@@ -22,8 +22,7 @@ def scrolldown():
 
 def backpage(page):
     driver.find_element_by_id(
-        "layout_0_rightcontent_0_updatepanel_1_RptPagination_HlkPageNumber_{}".format(page)).click()
-
+        "layout_0_rightcontent_0_updatepanel_1_RptPagination_HlkPageNumber_{}".format(page-1)).click()
 
 # 起始位置設為200，注意螢幕大小，我的螢幕為14吋。
 page = 1
@@ -44,7 +43,7 @@ while page < 5:
             driver.back()
             scrolldown()
             backpage(page)
-    backpage(page)
-    time.sleep(1)
     page += 1
+    backpage(page)        
+    time.sleep(1)
 print("好像沒東西喔!!!")
