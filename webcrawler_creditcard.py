@@ -12,7 +12,7 @@ driveroptions.add_argument("--headless")
 
 '''
 
-# 開啟並取得國泰信用卡網頁。
+# 開啟並取得國泰信用卡網頁。假如不是無介面模式，請把chrome_options=driveroptions刪除!!!
 driver = Chrome("./chromedriver.exe", chrome_options=driveroptions)
 # 注意是否要放大，或自訂螢幕大小。
 driver.maximize_window()
