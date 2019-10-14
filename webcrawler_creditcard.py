@@ -1,15 +1,30 @@
 from selenium.webdriver import Chrome
+from selenium.webdriver.chrome.options import Options
 import time
-import os
 
 url = "https://www.cathaybk.com.tw/cathaybk/personal/credit-card/cards/intro/list/"
 
+'''測試
+
+# 設定無介面視窗
+driveroptions = Options()
+driveroptions.add_argument("--headless")
+
+'''
+
 # 開啟並取得國泰信用卡網頁。
-driver = Chrome("./chromedriver.exe")
+driver = Chrome("./chromedriver.exe", chrome_options=driveroptions)
 # 注意是否要放大，或自訂螢幕大小。
 driver.maximize_window()
 time.sleep(1)
 driver.get(url)
+
+'''測試
+
+# 頁面縮放，但縮放完程式就暫停了...
+# driver.execute_script("document.body.style.zoom='0.8'")
+
+'''
 
 
 def scrolltop(pos):
