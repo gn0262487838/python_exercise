@@ -31,6 +31,7 @@ page = 1
 while page < 5:
     pos = 200
     for i in range(10):
+        print("現在到第幾頁:", page, "到第幾張卡片:", i + 1)
         pos += 320
         scrolltop(pos)
         # 注意抓取的值為list，要一個一個取出。
@@ -38,7 +39,6 @@ while page < 5:
         time.sleep(1)
         if page == 1:
             driver.back()
-            print("現在到第幾頁:", page, "到第幾張卡片:", i + 1)
             scrolltop(pos)
             time.sleep(1)
         else:
