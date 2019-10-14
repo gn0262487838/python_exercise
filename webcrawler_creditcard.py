@@ -39,8 +39,6 @@ while page < 5:
         time.sleep(1)
         if page == 1:
             driver.back()
-            scrolltop(pos)
-            time.sleep(1)
         else:
             driver.back()
             scrolldown()
