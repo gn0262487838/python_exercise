@@ -40,23 +40,18 @@ for i in hrefs:
     for j in content.find_all("span",{"class":"f2"}):
         j.extract()
 
-    if content.find_all("div",class_="push"):
-        posBox = ''
-        negBox = ''
-        print(content.find_all("div",class_="push")[1])
-        for j in content.find_all("div",class_="push")[1]:
-            print(j)
-            if "噓" in j.find("span",class_="push-tag"):
-                jstr = j.find("span", class_="push-content").text
-                negBox = negBox + jstr + "\n"
-            else:
-                jstr = j.find("span", class_="push-content").text
-                posBox = posBox + jstr + "\n"
-            j.extract()
-        s = pd.Series([posBox, negBox], index=["pos","neg"])
-        pttdf = pttdf.append(s, ignore_index=True)
+    posBox = ''
+    negBox = ''
 
-    s = pd.Series(content.text.replace(" ","").replace("-","").replace("SentfromJPTTonmyAsusASUS_Z01RD.",""),index=["content"])
-    pttdf = pttdf.append(s, ignore_index=True)
+    content = html.find_all("div", class_="push")
+    print(content[0].find("span",class_="push-content").text)
+
+
+
+    # s = pd.Series([posBox, negBox], index=["pos","neg"])
+    # pttdf = pttdf.append(s, ignore_index=True)
+    # 
+    # s = pd.Series(content.text.replace(" ","").replace("-","").replace("SentfromJPTTonmyAsusASUS_Z01RD.",""),index=["content"])
+    # pttdf = pttdf.append(s, ignore_index=True)
 
 print(pttdf)
