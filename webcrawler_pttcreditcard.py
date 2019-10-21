@@ -1,57 +1,83 @@
+# -*- coding=UTF-8 -*- #
+
+'''
+
+kit
+
+'''
+
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-Url = "https://www.ptt.cc/bbs/creditcard/index.html"
+'''
 
+設計一個可以爬蟲 ptt creditcard 推文
+
+'''
+
+page = 3155
 pttdf = pd.DataFrame(columns=["url","title","content","pos","neg"])
+print("=" * 50 + "Start Loading" + "=" * 50)
+while page > 3000:
 
-response = requests.get(Url)
-response.encoding = "UTF-8"
-html = BeautifulSoup(response.text, "html.parser")
+    print("現在第幾頁:{}".format(page))
+    Url = "https://www.ptt.cc/bbs/creditcard/index"+ str(page) +".html"
 
-title_list = html.find_all("div", {"class":"title"})
-
-ptt_url = "https://www.ptt.cc"
-titles = []
-hrefs = []
-for i in title_list:
-    if i.find("a"):
-        title = i.text.replace("\n","")
-        s = pd.Series([title],index=["title"])
-        pttdf = pttdf.append(s, ignore_index=True)
-
-        href = i.find("a").attrs["href"]
-        href = ptt_url + href
-        s = pd.Series([href],index=["url"])
-        pttdf = pttdf.append(s,ignore_index=True)
-        hrefs.append(href)
-
-for i in hrefs:
-    url = i
-    response = requests.get(url)
+    response = requests.get(Url)
     response.encoding = "UTF-8"
     html = BeautifulSoup(response.text, "html.parser")
-    content = html.find("div",{"id":"main-content"})
 
-    for j in content.find_all("div",{"class":"article-metaline"}):
-        j.extract()
-    content.find("div",{"class":"article-metaline-right"}).extract()
-    for j in content.find_all("span",{"class":"f2"}):
-        j.extract()
+    title_html = html.find_all("div", {"class":"title"})
+    domainName = "https://www.ptt.cc"
 
-    posBox = ''
-    negBox = ''
+    for i in title_html:
+        # 標題攝取
+        title = i.text.replace("\n","")
+        # 判定有無null
+        if "本文已被刪除" in title or "公告" in title:
+            continue
+        # 網址攝取並寫入pf
+        url = domainName + i.find("a").attrs["href"]
 
-    content = html.find_all("div", class_="push")
-    print(content[0].find("span",class_="push-content").text)
+        # 載入子網頁
+        response = requests.get(url)
+        url_html = BeautifulSoup(response.text, "html.parser")
+        main_content = url_html.find("div", {"id":"main-content"})
 
+        try:
+            # 移除不要的元素
+            main_content.find("div", {"class": "article-metaline-right"}).extract()
+            for j in main_content.find_all("div",{"class":"article-metaline"}):
+                j.extract()
+            for j in main_content.find_all("span",{"class":"f2"}):
+                j.extract()
+        except AttributeError:
+            print("好像有問題喔，等等再看看:{}".format(title))
 
+        # 拿取正反面推文
+        posBag = ""
+        negBag = ""
 
-    # s = pd.Series([posBox, negBox], index=["pos","neg"])
-    # pttdf = pttdf.append(s, ignore_index=True)
-    # 
-    # s = pd.Series(content.text.replace(" ","").replace("-","").replace("SentfromJPTTonmyAsusASUS_Z01RD.",""),index=["content"])
-    # pttdf = pttdf.append(s, ignore_index=True)
+        main_content_push = main_content.find_all("div", class_="push")
+        for k in main_content_push:
+            if "噓" in k.find_all("span")[0].text:
+                neg = k.find_all("span")[2].text
+                negBag = negBag + neg + "\n"
+            else:
+                pos = k.find_all("span")[2].text
+                posBag = posBag + pos + "\n"
 
-print(pttdf)
+        for j in main_content.find_all("div", class_="push"):
+            j.extract()
+
+        # 把東西一一寫入pd
+        content = main_content.text.replace(" ","").replace("-","").replace("SentfromJPTTonmyAsusASUS_Z01RD.","")
+        s = pd.Series([url, title, content, posBag, negBag], index=["url", "title", "content", "pos", "neg"])
+        pttdf = pttdf.append(s, ignore_index=True)
+    page -= 1
+
+print("="*50 + "好像結束摟" + "="*50)
+print("="*50 + "開始儲存中" + "="*50)
+pttdf.to_csv("ptt_content.csv",encoding="UTF-8", index=False)
+print("="*50 + "儲存完畢" + "="*50)
