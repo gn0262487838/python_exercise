@@ -37,7 +37,7 @@ while page > 3000:
         # 判定有無null
         if "本文已被刪除" in title or "公告" in title:
             continue
-        # 網址攝取並寫入pf
+        # 網址攝取
         url = domainName + i.find("a").attrs["href"]
 
         # 載入子網頁
