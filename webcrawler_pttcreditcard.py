@@ -21,7 +21,7 @@ pttdf = pd.DataFrame(columns=["url","title","content","pos","neg"])
 print("=" * 50 + "Start Loading" + "=" * 50)
 while page > 3000:
 
-    print("現在第{}頁:".format(page))
+    print("現在第{}頁".format(page))
     Url = "https://www.ptt.cc/bbs/creditcard/index"+ str(page) +".html"
     
     response = requests.get(Url)
