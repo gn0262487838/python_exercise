@@ -34,6 +34,7 @@ def convert_aac_to_wav(aacPath):
     # 還在思考路徑怎麼寫...
 
     # convert aac to wav
+    
     aac = AudioSegment.from_file(aacPath)
     aac.export(aacPath.split(".")[-2].replace("/","") + ".wav", format="wav")
 
@@ -41,3 +42,38 @@ def convert_aac_to_wav(aacPath):
     voice = wave.open(aacPath.split(".")[-2].replace("/","") + ".wav", "rb")
     channel, _, framerate, _, _, _ = voice.getparams()
     print(f"###開始轉檔###\n聲道數:{channel} 音頻:{framerate}\n###轉檔成功###")
+
+    
+'''參考
+
+def which(program):
+    """
+    Mimics behavior of UNIX which command.
+    """
+    # Add .exe program extension for windows support
+    if os.name == "nt" and not program.endswith(".exe"):
+        program += ".exe"
+
+    envdir_list = [os.curdir] + os.environ["PATH"].split(os.pathsep)
+
+    for envdir in envdir_list:
+        program_path = os.path.join(envdir, program)
+        if os.path.isfile(program_path) and os.access(program_path, os.X_OK):
+            return program_path
+
+
+def get_encoder_name():
+    """
+    Return enconder default application for system, either avconv or ffmpeg
+    """
+    if which("avconv"):
+        return "avconv"
+    elif which("ffmpeg"):
+        return "ffmpeg"
+    else:
+        # should raise exception
+        warn("Couldn't find ffmpeg or avconv - defaulting to ffmpeg, but may not work", RuntimeWarning)
+        return "ffmpeg"
+
+
+'''
