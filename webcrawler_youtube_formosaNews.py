@@ -7,7 +7,6 @@ import pandas as pd
 import wave
 import time
 import os
-import logging
 
 Logger = Logger(FILENAME="formosaNews")
 
