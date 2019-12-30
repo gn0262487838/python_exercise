@@ -9,43 +9,43 @@ import os
 '''
 class Logger(object):
 
-    '''
-    ::param FILENAME:str\n
-    if you have idea for filename , then fill in.
+    """
+    ::param FILENAME:str
+        if you have idea for filename , then fill in.
     
-    ::method debug(message:str)\n
-    logging level 10
+    ::method debug(message:str)
+        logging level 10
 
-    ::method info(message:str)\n
-    logging level 20
+    ::method info(message:str)
+        logging level 20
 
-    ::method warning(message:str)\n
-    logging level 30
+    ::method warning(message:str)
+        logging level 30
 
-    ::method error(message:str)\n
-    logging level 40
+    ::method error(message:str)
+        logging level 40
 
-    ::method critical(message:str)\n
-    logging level 50
+    ::method critical(message:str)
+        logging level 50
 
-    ::method setLevel(level)\n
-    if `logging level` than `level`,then show stdout on console.\n
-    example:\n
-            > Logger = Logger()
-            > Logger.setLevel(logging.INFO)
-            > Logger.debug("it's good")
-            
-            > Logger.info("come on")
-              "come on"
+        ::method setLevel(level)
+        if `logging level` than `level`,then show stdout on console.
+        example:
+                > Logger = Logger()
+                > Logger.setLevel(logging.INFO)
+                > Logger.debug("it's good")
+                
+                > Logger.info("come on")
+                  "come on"
 
-    ::method disable(message:str)\n
-    only use formal env.
-    this function has hide all stdout. 
+    ::method disable(message:str)
+        only use formal env.
+        this function has hide all stdout. 
     
-    ::method Close(message:str)\n
-    remove handler, flush and close.
+    ::method Close(message:str)
+        remove handler, flush and close.
 
-    '''
+    """
     def __init__(self, FILENAME=None):
 
         # get user's name
@@ -94,10 +94,13 @@ class Logger(object):
     def setLevel(self, level):
         self.logger.setLevel(level)
 
-    def diable(self):
+    def diable(self, levelNum=None):
         # 以往在開發時，需要在一些地方紀錄log，開發完成後就要去刪除那些指令。
         # 使用disable即可不必刪除那些指令且console也不會輸出log紀錄喔~
-        logging.disable(50)
+        if levelNum == None:
+            levelNum = 50
+
+        logging.disable(levelNum)
 
     def Close(self):
         self.logger.removeHandler(self.streamhandler)
