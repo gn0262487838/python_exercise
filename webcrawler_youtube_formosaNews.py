@@ -51,9 +51,11 @@ def convert_audio_or_video_to_Audio(paths, ar=16000, ac=1, newFileName="wav"):
                     s = f"filename extension is same : {fileType}"
                     Logger.error(s)
                     raise ValueError(s)
+
                 unk_fileType = AudioSegment.from_file(i)
                 unk_fileType = unk_fileType.set_channels(ac)
                 unk_fileType = unk_fileType.set_frame_rate(ar)
+                
                 newName_Wav = os.path.split(i)[1].replace(f"{fileType}", "." + newFileName)
                 unk_fileType.export(newName_Wav, format=newFileName, parameters=params)
                 with wave.open(newName_Wav, "rb") as f:
@@ -150,9 +152,9 @@ def formosaNews_search_and_to_csv(url=None):
 
 if __name__=="__main__":
     
-    hrefDf = pd.read_csv("./formosaNews.csv", encoding="UTF-8")
-    hrefList = list(hrefDf)
-
+    df = pd.read_csv("./formosaNews.csv", encoding="UTF-8")
+    hrefList = list(df["href"])
+    
     Logger.info("YT downloading...")
     for url in hrefList:
         try:

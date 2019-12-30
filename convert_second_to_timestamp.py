@@ -29,8 +29,11 @@ for i in content:
     end_s = int(num_1.group(1))
     end_q, end_r, end_ms = end_s // 60, end_s % 60, num_1.group(3)
     endTime = f"{end_q:2d}:{end_r:2d}:{end_ms}"
-
-    num = line[2]
+    
+    try:
+        num = line[2]
+    except IndexError:
+        num = "NULL"
     startList.append(startTime)
     endList.append(endTime)
     numList.append(num)
