@@ -10,9 +10,7 @@
 import re
 import pandas as pd
 
-
 df = pd.read_csv("formosaNews.csv", encoding="UTF-8")
-
 
 def Filter_NT(matched):
     s = matched.group("value")
