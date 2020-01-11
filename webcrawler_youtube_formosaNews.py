@@ -7,18 +7,23 @@ import pandas as pd
 import wave
 import time
 import os
+import re
 
 Logger = Logger(FILENAME="formosaNews")
+'''
 
-def scrolltop(pos):
+捲動chrome畫面
+
+'''
+def scrolltop(pos, driver):
 
     if not driver:
         return "pls build driver"
-    
+
     if type(pos) != int:
         raise TypeError(f"{pos} must be number")
 
-    js = f"document.documentElement.scrollTop={pos}" 
+    js = f"document.documentElement.scrollTop={pos}"
     driver.execute_script(js)
 
 def youtube_download(href):
@@ -26,14 +31,21 @@ def youtube_download(href):
     if type(href) != str:
         raise TypeError(f"{href} must be url")
 
-    # 轉檔後要儲存的資料夾
+    # 創建資料夾
     if not os.path.exists("./formosaNews"):
         os.makedirs("./formosaNews")
-    
+
     yt = YouTube(href)
+    # 標題去掉特殊符號並更改為_
+    s = yt.title
+    pattern = "\W"
+    regex = re.compile(pattern)
+    s = regex.sub("_", s)
     try:
         output_file = yt.streams.first().download("./formosaNews")
-        s = f"Download Success... {yt.title}"
+        # 在原存檔資料夾中重新命名檔名
+        os.rename(output_file, f"./formosaNews/{s}.mp4")
+        s = f"Download Success... {s}}"
         Logger.info(s)
     except:
         s = f"can't catch {href}"
@@ -55,7 +67,7 @@ def convert_audio_or_video_to_Audio(paths, ar=16000, ac=1, newFileName="wav"):
                 unk_fileType = AudioSegment.from_file(i)
                 unk_fileType = unk_fileType.set_channels(ac)
                 unk_fileType = unk_fileType.set_frame_rate(ar)
-                
+
                 newName_Wav = os.path.split(i)[1].replace(f"{fileType}", "." + newFileName)
                 unk_fileType.export(newName_Wav, format=newFileName, parameters=params)
                 with wave.open(newName_Wav, "rb") as f:
@@ -115,7 +127,7 @@ def formosaNews_search_and_to_csv(url=None):
             Logger.error(s)
 
         pos += 200
-        scrolltop(pos)
+        scrolltop(pos, driver)
         idx += 1
         if idx % 20 == 0:
             time.sleep(1)
@@ -139,7 +151,7 @@ def formosaNews_search_and_to_csv(url=None):
             s = f"Some Error on comment : {i}"
             Logger.error(s)
     Logger.info("===== comment : Finish =====")
-    
+
     Logger.info("creating csv...")
     dic = {
         "title": titleList,
@@ -151,10 +163,10 @@ def formosaNews_search_and_to_csv(url=None):
     Logger.info("OK...")
 
 if __name__=="__main__":
-    
+
     df = pd.read_csv("./formosaNews.csv", encoding="UTF-8")
     hrefList = list(df["href"])
-    
+
     Logger.info("YT downloading...")
     for url in hrefList:
         try:
@@ -168,7 +180,6 @@ if __name__=="__main__":
     convert_audio_or_video_to_Audio(videoPathList)
     Logger.info("=====    ALL FINISH    =====")
     Logger.Close()
-
 
 '''
 On 20191227
