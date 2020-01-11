@@ -45,7 +45,7 @@ def youtube_download(href):
         output_file = yt.streams.first().download("./formosaNews")
         # 在原存檔資料夾中重新命名檔名
         os.rename(output_file, f"./formosaNews/{s}.mp4")
-        s = f"Download Success... {s}}"
+        s = f"Download Success... {s}"
         Logger.info(s)
     except:
         s = f"can't catch {href}"
