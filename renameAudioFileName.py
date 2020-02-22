@@ -70,7 +70,7 @@ for line in content:
             regex = re.compile(pattern)
             for string in searchworkercontent:
                 if regex.search(string):
-                    recog = string.split(" ")[-1]
+                    recog = string.replace("\n", "").split(" ")[-1]
                     break
                 else:
                     recog = ""
